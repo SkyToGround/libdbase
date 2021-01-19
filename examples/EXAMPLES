@@ -1,0 +1,31 @@
+Some examples on the usage of libdbase:
+
+0) Plug in the detector in an available USB-port
+   (actually, example1 works with many digibases)
+
+Example 1)
+	Open connection to connected dbase(s) and 
+	print status of device, then make a clean exit.
+   
+	see: src/example1.c
+
+Example 2)
+	Open connection to dbase, enable HV and start detector,
+	print a couple of spectra and make a clean exit.
+
+	see: src/example2.c
+
+Example 3)
+	Open connection, enable HV, set in list-mode
+	and measure for 10s in list mode at 20Hz, printing
+	to stdout. 
+	Then reset into PHA mode and make a clean exit.
+
+Compile and run the examples using:
+$ make (if you havn't already compiled libdbase)
+$ sudo ./example1
+$ sudo ./example2
+$ sudo ./example3
+
+(C) peder.kock@med.lu.se
+Lund University, 2011,2012

@@ -1,0 +1,19 @@
+In version 0.2:
+++=======================++
+
+libdbase:
+#1 dbase_read(): 
+   internal buffer copied the wrong number of bytes SOLVED 12-02-13.
+#2 dbase_write_status(): 
+   for big endian machines. SOLVED.
+#3 Live/Real time preset not working. SOLVED 12-02-24
+#4 libdbase_read_lm_packets(): 
+   Wrong length of buffer send to device. SOLVED 12-02-25.
+#5 MAC users may experience lost connection with usb-device,
+   this seems to be due to the use of sleep(), c.f. src/example2-3.c.
+   The issue can be avoided by using the internal clock live/real time
+   the device itself. Start a msmt and reconnect whenever you want some info
+   from the detector.
+
+dbase:
+#1 -name Create directory (serial no) fails (unless -save was run first?) SOLVED 11-06-26
