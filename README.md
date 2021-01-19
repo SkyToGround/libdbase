@@ -45,7 +45,7 @@
 - Support for Detective...
 
 
-##Changes
+## Changes
 
 ### Version 0.3
 
