@@ -46,3 +46,14 @@ add_library(libdbase_cpp SHARED
     )
 
 target_link_libraries(libdbase_cpp PRIVATE libdbase)
+
+
+install(TARGETS libdbase libdbase_cpp
+    EXPORT graylog_logger-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+
+set(INSTALL_HEADERS ${libdbase_INC} ${libdbase_cpp_INC})
+
+install(FILES ${INSTALL_HEADERS} DESTINATION include)
