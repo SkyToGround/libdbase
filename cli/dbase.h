@@ -1,4 +1,4 @@
-/* 
+/*
    dbase.h: digibase C control program header file
 
  * Copyright (c) 2011, 2012 Peder Kock <peder.kock@med.lu.se>
@@ -19,26 +19,26 @@
 
 #define PATH_MAX_LEN 256
 
-/* 
+/*
    Struct holding various user settings
-   -set 
-   -clr 
+   -set
+   -clr
    vars are stored in this struct
 */
-typedef struct{
-  int haveopts;  /* options set flag */
-  int hvt;       /* HV target */
-  double pw;     /* pulse width */
-  double fgn;    /* fine gain */
-  double ltp;    /* live time preset */
-  double rtp;    /* real time preset */
-  int gsch[2];   /* gain stab. chans. */
-  int zsch[2];   /* zero stab. chans. */
+typedef struct {
+  int haveopts; /* options set flag */
+  int hvt;      /* HV target */
+  double pw;    /* pulse width */
+  double fgn;   /* fine gain */
+  double ltp;   /* live time preset */
+  double rtp;   /* real time preset */
+  int gsch[2];  /* gain stab. chans. */
+  int zsch[2];  /* zero stab. chans. */
 
-  int clrall;    /* clear all */
-  int clrspec;   /* clear spectrum */
-  int clrpres;   /* clear presets */
-  int clrcnt;    /* clear counters */
+  int clrall;  /* clear all */
+  int clrspec; /* clear spectrum */
+  int clrpres; /* clear presets */
+  int clrcnt;  /* clear counters */
 
 } settings;
 
@@ -46,15 +46,11 @@ typedef struct{
 void handle_signal(int sig);
 
 /* Measure in list mode */
-void measure_list_mode(char lmc, 
-		       char lma, 
-		       char lmt, 
-		       unsigned long long lm_time, 
-		       unsigned long long sleept);
+void measure_list_mode(char lmc, char lma, char lmt, unsigned long long lm_time,
+                       unsigned long long sleept);
 
 /* Parse time argument */
-void parse_time(unsigned long long *duration, 
-		const char *input);
+void parse_time(unsigned long long *duration, const char *input);
 
 /*
   Print short howto-guide
@@ -64,17 +60,13 @@ void print_usage();
 /*
   Parse settings struct
 */
-int parse_settings(const char* set, 
-		   char** val, 
-		   settings* opts, 
-		   int pos, 
-		   int argc, 
-		   int *k);
+int parse_settings(const char *set, char **val, settings *opts, int pos,
+                   int argc, int *k);
 
 /*
   Set settings to default
 */
-void init_settings(settings* opts);
+void init_settings(settings *opts);
 
 /*
   Make a clean exit

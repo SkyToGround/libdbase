@@ -50,8 +50,9 @@
 ### Version 0.3
 
 - Use CMake to generate a build system.
-- Added a simple C++ interface.
+- Added a simple C++ interface, originally developed to simplify the use of this library with Python.
 - Minor fix to event-mode code.
+- Re-formatted the code with clang-format.
 
 
 ### Version 0.2
