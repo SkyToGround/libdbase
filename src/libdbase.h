@@ -24,6 +24,7 @@
 
 /* libusb 1.X public header */
 #include <libusb.h>
+#include <stdio.h>
 
 /* C++ */
 #ifdef __cplusplus
