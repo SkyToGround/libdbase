@@ -510,8 +510,8 @@ int dbase_init2(libusb_device_handle *dev) {
   /* if no path is given, assume firmware in . */
   char str[] = "digiBase.rbf";
 #else
-  char str[strlen(PACK_PATH) + 32];
-  snprintf(str, sizeof(str), "%s/digiBase.rbf", PACK_PATH);
+  char str[strlen(PACK_PATH) + 1];
+  snprintf(str, sizeof(str), "%s", PACK_PATH);
 #endif
 
   /* Write packs 1,2,NULL,3 */
