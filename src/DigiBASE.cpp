@@ -26,9 +26,23 @@ DigiBASE::~DigiBASE() {
   libdbase_close(det);
 }
 
-void DigiBASE::SetHVOn() {
+void DigiBASE::SetHVOn(bool On) {
   if (is_ok) {
-    int ret = libdbase_hv_on(det);
+    int ret = -1;
+		if (On) {
+			ret = libdbase_hv_on(det);
+		} else {
+			ret = libdbase_hv_off(det);
+		}
+    if (-1 == ret) {
+      is_ok = false;
+    }
+  }
+}
+
+void DigiBASE::SetHVOff() {
+  if (is_ok) {
+    int ret = libdbase_hv_off(det);
     if (-1 == ret) {
       is_ok = false;
     }
@@ -59,15 +73,6 @@ void DigiBASE::SetPHAMode() {
 void DigiBASE::SetListMode() {
   if (is_ok) {
     int ret = libdbase_set_list_mode(det);
-    if (-1 == ret) {
-      is_ok = false;
-    }
-  }
-}
-
-void DigiBASE::SetHVOff() {
-  if (is_ok) {
-    int ret = libdbase_hv_off(det);
     if (-1 == ret) {
       is_ok = false;
     }
@@ -150,6 +155,20 @@ std::map<std::string, std::string> DigiBASE::GetStatus() {
     return ret_map;
   }
   ret_map["high_voltage_target"] = std::to_string(det->status.HVT * HV_FACTOR);
+	ret_map["high_voltage_actual_byte_1"] = std::to_string(int(det->status.AHV));
+	ret_map["unknown_2"] = std::to_string(int(det->status.u2));
+	ret_map["unknown_3"] = std::to_string(int(det->status.u3));
+	ret_map["unknown_6"] = std::to_string(int(det->status.u6));
+	ret_map["unknown_7"] = std::to_string(int(det->status.u7));
+	ret_map["unknown_8"] = std::to_string(int(det->status.u8));
+	ret_map["unknown_9"] = std::to_string(int(det->status.u9));
+	ret_map["unknown_10"] = std::to_string(int(det->status.u10));
+	ret_map["unknown_11"] = std::to_string(int(det->status.u11));
+	ret_map["unknown_12"] = std::to_string(int(det->status.u12));
+	ret_map["unknown_13"] = std::to_string(int(det->status.u13));
+	ret_map["unknown_14"] = std::to_string(int(det->status.u14));
+	ret_map["unknown_15"] = std::to_string(int(det->status.u15));
+	ret_map["unknown_16"] = std::to_string(int(det->status.u16));
   ret_map["fine_gain_setting"] =
       std::to_string(GET_INV_GAIN_VALUE(det->status.FGN));
   ret_map["fine_gain_actual"] =

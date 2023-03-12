@@ -47,6 +47,10 @@ add_library(libdbase_cpp SHARED
 
 target_link_libraries(libdbase_cpp PRIVATE libdbase)
 
+find_package(pybind11 REQUIRED)
+
+pybind11_add_module(pylibdbase pylibdbase.cpp)
+target_link_libraries(pylibdbase PUBLIC PkgConfig::libusb libdbase_cpp)
 
 install(TARGETS libdbase libdbase_cpp
     EXPORT graylog_logger-targets

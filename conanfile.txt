@@ -1,0 +1,14 @@
+[requires]
+pybind11/2.10.1
+libusb/1.0.26
+
+
+[generators]
+cmake
+cmake_find_package
+virtualbuildenv
+virtualrunenv
+
+[options]
+
+[imports]

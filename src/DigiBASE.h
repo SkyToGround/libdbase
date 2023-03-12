@@ -11,7 +11,7 @@ class DigiBASE {
 public:
   DigiBASE(unsigned int serial);
   ~DigiBASE();
-  void SetHVOn();
+  void SetHVOn(bool On = true);
   void SetHVOff();
   void StartMeasurement();
   void StopMeasurement();
