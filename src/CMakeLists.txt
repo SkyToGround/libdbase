@@ -10,7 +10,7 @@ set(libdbase_INC
     libdbasei.h)
 
 
-add_library(libdbase SHARED
+add_library(libdbase STATIC
     ${libdbase_SRC}
     ${libdbase_INC}
     )
@@ -42,7 +42,7 @@ set(libdbase_cpp_SRC
 set(libdbase_cpp_INC
     DigiBASE.h)
 
-add_library(libdbase_cpp SHARED
+add_library(libdbase_cpp STATIC
     ${libdbase_cpp_SRC}
     ${libdbase_cpp_INC}
     )
