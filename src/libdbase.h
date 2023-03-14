@@ -25,6 +25,7 @@
 /* libusb 1.X public header */
 #include <libusb.h>
 #include <stdio.h>
+#include <stdint.h>
 
 /* C++ */
 #ifdef __cplusplus
@@ -193,7 +194,7 @@ int libdbase_hv_off(detector *det);
 
    Set target high voltage (50-1200 V)
 */
-int libdbase_set_hv(detector *det, ushort hv);
+int libdbase_set_hv(detector *det, uint16_t hv);
 /* Set (and enable) real/live time presets */
 int libdbase_set_rtp(detector *det, double real_time_preset);
 int libdbase_set_ltp(detector *det, double live_time_preset);
@@ -201,9 +202,9 @@ int libdbase_set_ltp(detector *det, double live_time_preset);
 int libdbase_set_rtp_off(detector *det);
 int libdbase_set_ltp_off(detector *det);
 /* Set gain stabilization channels (ROI) */
-int libdbase_set_gs_chans(detector *det, ushort center, ushort width);
+int libdbase_set_gs_chans(detector *det, uint16_t center, uint16_t width);
 /* Set zero stabilization channels (ROI) */
-int libdbase_set_zs_chans(detector *det, ushort center, ushort width);
+int libdbase_set_zs_chans(detector *det, uint16_t center, uint16_t width);
 /* Set pulse width (0.75-2.0 us) */
 int libdbase_set_pw(detector *det, float pulse_width);
 /* Set fine gain (0.4-1.2) */
@@ -284,7 +285,7 @@ void libdbase_print_diff_file_spectrum_binary(const detector *det, FILE *fh);
    Sum region and optionally, if [fh != NULL],
    print region of interest
 */
-void libdbase_print_roi(detector *det, uint start_ch, uint end_ch, uint *sum,
+void libdbase_print_roi(detector *det, uint32_t start_ch, uint32_t end_ch, uint32_t *sum,
                         FILE *fh);
 
 /*

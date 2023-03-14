@@ -393,10 +393,10 @@ int libdbase_hv_off(detector *det) {
 
   Set high voltage, argument given in volts (V)
 */
-int libdbase_set_hv(detector *det, ushort hv) {
+int libdbase_set_hv(detector *det, uint16_t hv) {
   if (check_detector(det, "libdbase_set_hv") < 0)
     return -1;
-  if (hv > (ushort)MAX_HV) {
+  if (hv > (uint16_t)MAX_HV) {
     fprintf(stderr, "E: given high voltage (%hu) exceeds maximum (%d)\n", hv,
             MAX_HV);
     return -1;
@@ -553,7 +553,7 @@ int libdbase_clear_all(detector *det) {
 /*
    Set gain stabilization channels
 */
-int libdbase_set_gs_chans(detector *det, ushort center, ushort width) {
+int libdbase_set_gs_chans(detector *det, uint16_t center, uint16_t width) {
   if (check_detector(det, "libdbase_set_gs_chans") < 0)
     return -1;
   if (0 == center || center > det->status.LEN || width == 0 ||
@@ -574,7 +574,7 @@ int libdbase_set_gs_chans(detector *det, ushort center, ushort width) {
 /*
    Set zero stabilization channels
 */
-int libdbase_set_zs_chans(detector *det, ushort center, ushort width) {
+int libdbase_set_zs_chans(detector *det, uint16_t center, uint16_t width) {
   if (check_detector(det, "libdbase_zs_chans") < 0)
     return -1;
   if (center == 0 || center > det->status.LEN || width == 0 ||
@@ -729,7 +729,7 @@ void libdbase_print_diff_file_spectrum_binary(const detector *det, FILE *fh) {
   Print (Region of Interest) part of spectrum (and returns sum in *sum)
   - if *fh is NULL only sum is calculated
 */
-void libdbase_print_roi(detector *det, uint start_ch, uint end_ch, uint *sum,
+void libdbase_print_roi(detector *det, uint32_t start_ch, uint32_t end_ch, uint32_t *sum,
                         FILE *fh) {
   if (check_detector(det, "libdbase_print_roi") < 0 || start_ch > end_ch ||
       end_ch > det->status.LEN) {

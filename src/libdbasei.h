@@ -22,6 +22,7 @@
 
 /* libdbase public header */
 #include "libdbase.h"
+#include <stdint.h>
 
 /* C++ */
 #ifdef __cplusplus
