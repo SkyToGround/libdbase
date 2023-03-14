@@ -1,5 +1,6 @@
 #include "DigiBASE.h"
 #include "libdbasei.h"
+#include <sstream>
 
 std::vector<unsigned int> ListConnectedDetectors() {
   std::vector<unsigned int> ret_vec;
@@ -142,6 +143,12 @@ void DigiBASE::SetHV(unsigned short high_voltage) {
   }
 }
 
+std::string float_to_string(double Value) {
+	std::stringstream ss;
+	ss << Value;
+	return ss.str();
+}
+
 std::map<std::string, std::string> DigiBASE::GetStatus() {
   std::map<std::string, std::string> ret_map;
 
@@ -154,7 +161,7 @@ std::map<std::string, std::string> DigiBASE::GetStatus() {
   } else {
     return ret_map;
   }
-  ret_map["high_voltage_target"] = std::to_string(det->status.HVT * HV_FACTOR);
+  ret_map["high_voltage_target"] = std::to_string(int(det->status.HVT * HV_FACTOR));
 	ret_map["high_voltage_actual_byte_1"] = std::to_string(int(det->status.AHV));
 	ret_map["unknown_2"] = std::to_string(int(det->status.u2));
 	ret_map["unknown_3"] = std::to_string(int(det->status.u3));
@@ -170,14 +177,14 @@ std::map<std::string, std::string> DigiBASE::GetStatus() {
 	ret_map["unknown_15"] = std::to_string(int(det->status.u15));
 	ret_map["unknown_16"] = std::to_string(int(det->status.u16));
   ret_map["fine_gain_setting"] =
-      std::to_string(GET_INV_GAIN_VALUE(det->status.FGN));
+      float_to_string(GET_INV_GAIN_VALUE(det->status.FGN));
   ret_map["fine_gain_actual"] =
-      std::to_string(GET_INV_GAIN_VALUE(det->status.AFGN));
-  ret_map["live_time"] = std::to_string(det->status.LT * TICKSTOSEC);
-  ret_map["live_time_preset"] = std::to_string(det->status.LTP * TICKSTOSEC);
-  ret_map["real_time"] = std::to_string(det->status.RT * TICKSTOSEC);
-  ret_map["real_time_preset"] = std::to_string(det->status.RTP * TICKSTOSEC);
-  ret_map["pulse_width"] = std::to_string(GET_PW(det->status.PW));
+      float_to_string(GET_INV_GAIN_VALUE(det->status.AFGN));
+  ret_map["live_time"] = float_to_string(det->status.LT * TICKSTOSEC);
+  ret_map["live_time_preset"] = float_to_string(det->status.LTP * TICKSTOSEC);
+  ret_map["real_time"] = float_to_string(det->status.RT * TICKSTOSEC);
+  ret_map["real_time_preset"] = float_to_string(det->status.RTP * TICKSTOSEC);
+  ret_map["pulse_width"] = float_to_string(GET_PW(det->status.PW));
 
   ret_map["gs_upper"] = std::to_string(det->status.GSU);
   ret_map["gs_lower"] = std::to_string(det->status.GSL);
