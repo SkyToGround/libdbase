@@ -1,5 +1,5 @@
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(libusb REQUIRED IMPORTED_TARGET libusb-1.0)
+# find_package(PkgConfig REQUIRED)
+# pkg_check_modules(libusb REQUIRED IMPORTED_TARGET libusb-1.0)
 
 set(libdbase_SRC
     libdbase.c
@@ -15,7 +15,9 @@ add_library(libdbase SHARED
     ${libdbase_INC}
     )
 
-target_link_libraries(libdbase PUBLIC PkgConfig::libusb)
+find_package(libusb REQUIRED)
+target_link_libraries(libdbase PUBLIC libusb::libusb)
+
 target_include_directories(libdbase
     PUBLIC
     "."
@@ -50,7 +52,7 @@ target_link_libraries(libdbase_cpp PRIVATE libdbase)
 find_package(pybind11 REQUIRED)
 
 pybind11_add_module(pylibdbase pylibdbase.cpp)
-target_link_libraries(pylibdbase PUBLIC PkgConfig::libusb libdbase_cpp)
+target_link_libraries(pylibdbase PUBLIC libusb::libusb libdbase_cpp)
 
 install(TARGETS libdbase libdbase_cpp
     EXPORT graylog_logger-targets
