@@ -748,11 +748,12 @@ int main(int argc, char **argv) {
 
   /* Save status to file */
   if (save == 1) {
+		fprintf(stderr, "E: when saving status\n");
     // if(libdbase_save_status(det, NULL) < 0)
-    if (libdbase_save_status_text(det, NULL) < 0)
-      fprintf(stderr, "E: when saving status\n");
-    else if (!q)
-      printf("Status saved to file\n");
+    // if (libdbase_save_status_text(det, NULL) < 0)
+    //   fprintf(stderr, "E: when saving status\n");
+    // else if (!q)
+    //   printf("Status saved to file\n");
   }
 
   /* Close output file */

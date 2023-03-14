@@ -46,10 +46,11 @@ int detectors = 0;
 */
 int libdbase_get_list(detector ***list, int *found) {
   /* Allow up to 32 dbases, should be 'nuf */
-  int LEN = 32, serials[LEN], k;
+#define LEN_32 32
+	int serials[LEN_32], k;
 
   /* Get all dbase(s) serial numbers */
-  *found = libdbase_list_serials(serials, LEN);
+  *found = libdbase_list_serials(serials, LEN_32);
   if (_DEBUG)
     printf("libdbase_list_init(): Found %d digibase(s)\n", *found);
 
@@ -803,58 +804,58 @@ void libdbase_print_file_status(const status_msg *status, const int serial,
      _should_ be more efficient to print the whole char array
      at once. Construct char array using safe sprintf first.
   */
-  const size_t len = 512;
+#define len_512 512
   int w = 0;
-  char buf[(int)len];
+  char buf[len_512];
 
   /* Print header with serial number */
-  w += snprintf(buf, len, "======== MCB STATUS (%d) =======\n", serial);
+  w += snprintf(buf, len_512, "======== MCB STATUS (%d) =======\n", serial);
 
   /* CTRL byte information */
-  w += snprintf(buf + w, len - w, "Running    : %s\n",
+  w += snprintf(buf + w, len_512 - w, "Running    : %s\n",
                 (status->CTRL & ON_MASK) > 0 ? "Yes" : "No");
-  w += snprintf(buf + w, len - w, "Mode       : %s\n",
+  w += snprintf(buf + w, len_512 - w, "Mode       : %s\n",
                 (status->CTRL & MODE_MASK) > 0 ? "PHA" : "List");
-  w += snprintf(buf + w, len - w, "HV on      : %s\n",
+  w += snprintf(buf + w, len_512 - w, "HV on      : %s\n",
                 (status->CTRL & HV_MASK) > 0 ? "Yes" : "No");
-  w += snprintf(buf + w, len - w, "RTP on     : %s\n",
+  w += snprintf(buf + w, len_512 - w, "RTP on     : %s\n",
                 (status->CTRL & RTP_MASK) > 0 ? "Yes" : "No");
-  w += snprintf(buf + w, len - w, "LTP on     : %s\n",
+  w += snprintf(buf + w, len_512 - w, "LTP on     : %s\n",
                 (status->CTRL & LTP_MASK) > 0 ? "Yes" : "No");
-  w += snprintf(buf + w, len - w, "Gain stab. : %s\n",
+  w += snprintf(buf + w, len_512 - w, "Gain stab. : %s\n",
                 (status->CTRL & GS_MASK) > 0 ? "Yes" : "No");
-  w += snprintf(buf + w, len - w, "Zero stab. : %s\n\n",
+  w += snprintf(buf + w, len_512 - w, "Zero stab. : %s\n\n",
                 (status->CTRL & ZS_MASK) > 0 ? "Yes" : "No");
 
   /* General settings */
-  w += snprintf(buf + w, len - w, "MCB Chans. : %d\n", status->LEN + 1);
-  w += snprintf(buf + w, len - w, "HV Target  : %d V\n",
+  w += snprintf(buf + w, len_512 - w, "MCB Chans. : %d\n", status->LEN + 1);
+  w += snprintf(buf + w, len_512 - w, "HV Target  : %d V\n",
                 (int)(status->HVT * HV_FACTOR));
-  w += snprintf(buf + w, len - w, "Pulse width: %.2f us\n", GET_PW(status->PW));
+  w += snprintf(buf + w, len_512 - w, "Pulse width: %.2f us\n", GET_PW(status->PW));
   // w += snprintf(buf+w, len-w, "Fine Gain  : %.5f\n",
   // GET_INV_GAIN_VALUE(status->FGN));
-  w += snprintf(buf + w, len - w, "Fine Gain  : %.5f (set: %.5f)\n",
+  w += snprintf(buf + w, len_512 - w, "Fine Gain  : %.5f (set: %.5f)\n",
                 GET_INV_GAIN_VALUE(status->AFGN),
                 GET_INV_GAIN_VALUE(status->FGN));
-  w += snprintf(buf + w, len - w, "Live Time Preset  : %.2f s\n",
+  w += snprintf(buf + w, len_512 - w, "Live Time Preset  : %.2f s\n",
                 status->LTP * TICKSTOSEC);
-  w += snprintf(buf + w, len - w, "Live Time         : %.2f s\n",
+  w += snprintf(buf + w, len_512 - w, "Live Time         : %.2f s\n",
                 status->LT * TICKSTOSEC);
-  w += snprintf(buf + w, len - w, "Real Time Preset  : %.2f s\n",
+  w += snprintf(buf + w, len_512 - w, "Real Time Preset  : %.2f s\n",
                 status->RTP * TICKSTOSEC);
-  w += snprintf(buf + w, len - w, "Real Time         : %.2f s\n",
+  w += snprintf(buf + w, len_512 - w, "Real Time         : %.2f s\n",
                 status->RT * TICKSTOSEC);
-  w += snprintf(buf + w, len - w, "Gain Stab. chans  : [%hu %hu %hu]\n",
+  w += snprintf(buf + w, len_512 - w, "Gain Stab. chans  : [%hu %hu %hu]\n",
                 status->GSL, status->GSC, status->GSU);
-  w += snprintf(buf + w, len - w, "Zero Stab. chans  : [%hu %hu %hu]\n",
+  w += snprintf(buf + w, len_512 - w, "Zero Stab. chans  : [%hu %hu %hu]\n",
                 status->ZSL, status->ZSC, status->ZSU);
-  w += snprintf(buf + w, len - w, "============================\n");
+  w += snprintf(buf + w, len_512 - w, "============================\n");
 
   /* Print buffer to file handle */
   fprintf(fh, "%s", buf);
 
   if (_DEBUG)
-    fprintf(fh, "Total of %d chars, buffer was %d \n", w, (int)len);
+    fprintf(fh, "Total of %d chars, buffer was %d \n", w, (int)len_512);
 
   /* old code, calling fprintf several times */
   /*fprintf(fh, "======== MCB STATUS (%d) =======\n", det->serial);
@@ -949,80 +950,80 @@ void libdbase_print_file_status(const status_msg *status, const int serial,
 /*
   Save status as ASCII
 */
-int libdbase_save_status_text(detector *det, const char *dir) {
-  /* Write path string */
-  char path[MAX_PATH_LEN - 10];
-
-  /* Check detector pointer and serial (int) */
-  if (check_detector(det, "libdbase_save_status_text") < 0 || !det->serial) {
-    if (!det->serial)
-      fprintf(stderr, "E: libdbase_save_status_text(), serial no. not set\n");
-    return -1;
-  }
-
-  status_msg tmp;
-  /* Check sanity of status struct (cannot be in listmode etc.) */
-  if (check_status_sanity(det->status, &tmp) < 0) {
-    fprintf(stderr,
-            "E: libdbase_save_status_text() status is corrupt - aborting\n");
-    return -1;
-  }
-
-  /* Custom path */
-  if (dir != NULL)
-    snprintf(path, sizeof(path), "%s/%d", dir, det->serial);
-  else {
-    int err;
-    /*
-       Save struct at compile-time defined path,
-       fall back on curr dir if none was given
-    */
-    if (libdbase_get_det_path(det, path, sizeof(path)) < 0) {
-      fprintf(stderr, "E: unable to load libdbase path\n");
-      return -1;
-    }
-
-    /* Create directory if it doesn't exist */
-    err = mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR |     /* User perm,   7 */
-                          S_IRGRP | S_IWGRP | S_IXGRP | /* Group perm,  7 */
-                          S_IROTH | S_IXOTH             /* Others perm, 5 */
-    );
-    /* Ignore EEXIST error */
-    if (err != 0 && errno != EEXIST) {
-      fprintf(stderr,
-              "E: libdbase_save_status_text() Unable to create directory: %s "
-              "(err=%d)\n",
-              path, errno);
-      return -1;
-    }
-    if (_DEBUG > 0) {
-      if (errno != EEXIST)
-        printf("Created directoy: %s\nstatus code mkdir: %d\n", path, err);
-      else
-        printf("Using existing directory %s\n", path);
-    }
-  }
-  /* Create status file */
-  char file[MAX_PATH_LEN];
-  snprintf(file, sizeof(file), "%s/status.txt", path);
-
-  if (_DEBUG > 0)
-    printf("Writing status to file: %s\n", file);
-
-  FILE *fh = fopen(file, "w");
-  if (fh == NULL) {
-    fprintf(stderr, "E: libdbase_save_status_text() Unable to open file %s\n",
-            file);
-    return -1;
-  }
-  /* Write (corrected) status struct as text */
-  libdbase_print_file_status(&tmp, det->serial, fh);
-
-  /* Close file */
-  fclose(fh);
-
-  return 0;
-}
+// int libdbase_save_status_text(detector *det, const char *dir) {
+//   /* Write path string */
+//   char path[MAX_PATH_LEN - 10];
+//
+//   /* Check detector pointer and serial (int) */
+//   if (check_detector(det, "libdbase_save_status_text") < 0 || !det->serial) {
+//     if (!det->serial)
+//       fprintf(stderr, "E: libdbase_save_status_text(), serial no. not set\n");
+//     return -1;
+//   }
+//
+//   status_msg tmp;
+//   /* Check sanity of status struct (cannot be in listmode etc.) */
+//   if (check_status_sanity(det->status, &tmp) < 0) {
+//     fprintf(stderr,
+//             "E: libdbase_save_status_text() status is corrupt - aborting\n");
+//     return -1;
+//   }
+//
+//   /* Custom path */
+//   if (dir != NULL)
+//     snprintf(path, sizeof(path), "%s/%d", dir, det->serial);
+//   else {
+//     int err;
+//     /*
+//        Save struct at compile-time defined path,
+//        fall back on curr dir if none was given
+//     */
+//     if (libdbase_get_det_path(det, path, sizeof(path)) < 0) {
+//       fprintf(stderr, "E: unable to load libdbase path\n");
+//       return -1;
+//     }
+//
+//     /* Create directory if it doesn't exist */
+//     err = mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR |     /* User perm,   7 */
+//                           S_IRGRP | S_IWGRP | S_IXGRP | /* Group perm,  7 */
+//                           S_IROTH | S_IXOTH             /* Others perm, 5 */
+//     );
+//     /* Ignore EEXIST error */
+//     if (err != 0 && errno != EEXIST) {
+//       fprintf(stderr,
+//               "E: libdbase_save_status_text() Unable to create directory: %s "
+//               "(err=%d)\n",
+//               path, errno);
+//       return -1;
+//     }
+//     if (_DEBUG > 0) {
+//       if (errno != EEXIST)
+//         printf("Created directoy: %s\nstatus code mkdir: %d\n", path, err);
+//       else
+//         printf("Using existing directory %s\n", path);
+//     }
+//   }
+//   /* Create status file */
+//   char file[MAX_PATH_LEN];
+//   snprintf(file, sizeof(file), "%s/status.txt", path);
+//
+//   if (_DEBUG > 0)
+//     printf("Writing status to file: %s\n", file);
+//
+//   FILE *fh = fopen(file, "w");
+//   if (fh == NULL) {
+//     fprintf(stderr, "E: libdbase_save_status_text() Unable to open file %s\n",
+//             file);
+//     return -1;
+//   }
+//   /* Write (corrected) status struct as text */
+//   libdbase_print_file_status(&tmp, det->serial, fh);
+//
+//   /* Close file */
+//   fclose(fh);
+//
+//   return 0;
+// }
 
 /*
   Load status from save file

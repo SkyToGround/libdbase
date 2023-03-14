@@ -295,7 +295,7 @@ int dbase_get_spectrum(libusb_device_handle *dev, int32_t *chans,
   unsigned char onflag = 1;
 
   /* Temporary buffer */
-  int32_t tmp[len];
+  int32_t tmp[DBASE_LEN + 1];
 
   /* Request spectrum */
   err = dbase_write_one(dev, SPECTRUM, &io);
@@ -510,7 +510,8 @@ int dbase_init2(libusb_device_handle *dev) {
   /* if no path is given, assume firmware in . */
   char str[] = "digiBase.rbf";
 #else
-  char str[strlen(PACK_PATH) + 1];
+#define STRLEN(s) (sizeof(s)/sizeof(s[0]))
+  char str[STRLEN(PACK_PATH)];
   snprintf(str, sizeof(str), "%s", PACK_PATH);
 #endif
 
@@ -860,16 +861,16 @@ int parse_status_lines(status_msg *status, FILE *fh) {
   int t, t2, t3, llen, lineno = 0;
 
   /* sscanf() buffer, risk of overflow in sscanf() later... */
-  const int buflen = 64;
-  char str[buflen];
+#define buflen_64 64
+  char str[buflen_64];
 
   while ((llen = my_getline(&line, &len, fh)) >= 0 && lineno < 19) {
     /* Check line length against str buffer size */
-    if (llen > buflen) {
+    if (llen > buflen_64) {
       fprintf(stderr,
               "E: Risk of overflow in parse_status_lines()\n\t buflen=%d "
               "getline() read %d bytes!\n",
-              buflen, llen);
+              buflen_64, llen);
       free(line);
       return -1; /* bail before corrupting memory */
     }
