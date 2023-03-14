@@ -1395,7 +1395,7 @@ int libdbase_list_serials(int *serials, int len) {
       err = libusb_open(device, &handle);
       if (err < 0) {
         /* Unable to open usb connection to device - bail */
-        fprintf(stderr, "E: libdbase_list_serials() Error opening device\n");
+        fprintf(stderr, "E: libdbase_list_serials() Error opening device (error: %d, descr.: %s)\n", err, libusb_strerror(err));
         libusb_free_device_list(list, 1);
         return -1;
       }
